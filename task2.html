@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Завдання 2 — Екранна клавіатура</title>
+  <style>
+   body {
+  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+  margin: 0;
+  padding: 40px;
+}
+.card {
+  max-width: 700px; 
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1e293b;
+}
+textarea {
+  width: 100%;
+  height: 150px; 
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 18px;
+  margin-bottom: 25px;
+  resize: none;
+}
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; 
+}
+.row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px; 
+}
+button {
+  padding: 15px 20px; 
+  font-size: 18px; 
+  border: none;
+  border-radius: 8px;
+  background: #e2e8f0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button:hover {
+  background: #cbd5e1;
+}
+.space-btn {
+  flex: 1;
+  min-width: 250px; 
+}
+.clear-btn {
+  background: #f87171;
+  color: white;
+  margin-top: 15px;
+}
+.clear-btn:hover {
+  background: #ef4444;
+}
+a.back {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  background: #e2e8f0;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #1e293b;
+}
+a.back:hover {
+  background: #cbd5e1;
+}
+
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Завдання 2 — Екранна клавіатура</h2>
+
+    <textarea id="output" placeholder="Натискайте кнопки, щоб набирати текст..."></textarea>
+
+    <div class="keyboard" id="keyboard"></div>
+
+    <button class="clear-btn" id="clear">Очистити поле</button>
+
+    <a href="lab3.html" class="back">⬅ Назад до меню</a>
+  </div>
+
+  <script>
+    // Масиви з цифрами та літерами
+    const numbers = ['0','1','2','3','4','5','6','7','8','9'];
+    const letters = [
+      'а','б','в','г','ґ','д','е','є','ж','з',
+      'и','і','ї','й','к','л','м','н','о','п',
+      'р','с','т','у','ф','х','ц','ч','ш','щ',
+      'ь','ю','я'
+    ];
+
+    const output = document.getElementById("output");
+    const keyboard = document.getElementById("keyboard");
+
+    // Функція для створення рядка кнопок
+    function createRow(symbols) {
+      const row = document.createElement("div");
+      row.classList.add("row");
+      symbols.forEach(symbol => {
+        const btn = document.createElement("button");
+        btn.textContent = symbol;
+        btn.addEventListener("click", () => {
+          output.value += symbol;
+        });
+        row.appendChild(btn);
+      });
+      keyboard.appendChild(row);
+    }
+
+    // Створюємо клавіатуру
+    createRow(numbers); // верхній рядок з цифрами
+    createRow(letters.slice(0,11));  // 1 рядок літер
+    createRow(letters.slice(11,22)); // 2 рядок літер
+    createRow(letters.slice(22));    // 3 рядок літер
+
+    // Додаємо кнопку "Пробіл"
+    const spaceRow = document.createElement("div");
+    spaceRow.classList.add("row");
+    const spaceBtn = document.createElement("button");
+    spaceBtn.textContent = "⎵ Пробіл";
+    spaceBtn.classList.add("space-btn");
+    spaceBtn.addEventListener("click", () => {
+      output.value += " ";
+    });
+    spaceRow.appendChild(spaceBtn);
+    keyboard.appendChild(spaceRow);
+
+    // Кнопка очистки
+    document.getElementById("clear").addEventListener("click", () => {
+      output.value = "";
+    });
+  </script>
+</body>
+</html>

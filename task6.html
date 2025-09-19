@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Ієрархія: Альбоми та пісні</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      margin: 0;
+      padding: 40px;
+    }
+    .card {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #1e293b;
+    }
+    ul {
+      list-style: none;
+      padding-left: 20px;
+    }
+    li {
+      margin: 6px 0;
+    }
+    .toggle {
+      cursor: pointer;
+      font-weight: bold;
+      color: #2563eb;
+      user-select: none;
+      display: inline-block;
+    }
+    .toggle::before {
+      content: "▶ ";
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    .toggle.open::before {
+      transform: rotate(90deg);
+    }
+    .nested {
+      display: none;
+      margin-left: 15px;
+      border-left: 2px solid #e2e8f0;
+      padding-left: 10px;
+    }
+    .nested.open {
+      display: block;
+      animation: fadeIn 0.3s ease-in;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    a.back {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background: #e2e8f0;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #1e293b;
+    }
+    a.back:hover {
+      background: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Альбоми Наді Дорофєєвої</h2>
+    <ul>
+      <li>
+        <span class="toggle">GIRL POWER (2021)</span>
+        <ul class="nested">
+          <li>Горит</li>
+          <li>Почему</li>
+          <li>rasstoyanie</li>
+          <li>в тебе</li>
+        </ul>
+      </li>
+      <li>
+        <span class="toggle">СЕНСАЦІЯ (2023)</span>
+        <ul class="nested">
+          <li>Хто я?</li>
+          <li>whatsup</li>
+          <li>fortepiano</li>
+          <li>чувства</li>
+        </ul>
+      </li>
+      <li>
+        <span class="toggle">Сингли</span>
+        <ul class="nested">
+          <li>volcano</li>
+          <li>ruthless</li>
+          <li>неон</li>
+        </ul>
+      </li>
+    </ul>
+    <a href="lab3.html" class="back">⬅ Повернутись</a>
+  </div>
+
+  <script>
+    document.querySelectorAll(".toggle").forEach(toggle => {
+      toggle.addEventListener("click", () => {
+        toggle.classList.toggle("open");
+        let nested = toggle.nextElementSibling;
+        nested.classList.toggle("open");
+      });
+    });
+  </script>
+</body>
+</html>

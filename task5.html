@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Математичні завдання</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      margin: 0;
+      padding: 40px;
+    }
+    .card {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #1e293b;
+    }
+    .task {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #0f172a;
+    }
+    input {
+      padding: 10px;
+      font-size: 18px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      width: 120px;
+      text-align: center;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 12px 18px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #60a5fa;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #3b82f6;
+    }
+    .result {
+      font-size: 18px;
+      margin-top: 15px;
+      color: #1e293b;
+      font-weight: bold;
+    }
+    .score {
+      font-size: 18px;
+      margin-top: 10px;
+      color: #334155;
+    }
+    a.back {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background: #e2e8f0;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #1e293b;
+    }
+    a.back:hover {
+      background: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Перевірка знань арифметики</h2>
+    <div class="task" id="task">Завдання з'явиться тут</div>
+    <input type="number" id="answer" placeholder="Ваша відповідь">
+    <div class="controls">
+      <button id="check">Перевірити</button>
+      <button id="next">Наступне завдання</button>
+    </div>
+    <div class="result" id="result"></div>
+    <div class="score" id="score"></div>
+    <a href="lab3.html" class="back">⬅ Повернутись</a>
+  </div>
+
+  <script>
+    const taskEl = document.getElementById("task");
+    const answerEl = document.getElementById("answer");
+    const resultEl = document.getElementById("result");
+    const scoreEl = document.getElementById("score");
+
+    const operations = ["+", "-", "*", "/"];
+    let correctAnswer = 0;
+    let total = 0;
+    let correct = 0;
+
+    function newTask() {
+      if (total >= 5) {
+        taskEl.textContent = "Завдання завершено!";
+        resultEl.textContent = "";
+        scoreEl.textContent = `Рахунок: ${correct} із ${total}`;
+        return;
+      }
+      let n1 = Math.floor(Math.random() * 10);
+      let n2 = Math.floor(Math.random() * 10);
+      let op = operations[Math.floor(Math.random() * operations.length)];
+
+      // Уникаємо ділення на 0
+      if (op === "/" && n2 === 0) n2 = 1;
+
+      let expr = `${n1} ${op} ${n2}`;
+      correctAnswer = eval(expr);
+      // для ділення округляємо до 2 знаків
+      if (op === "/") correctAnswer = parseFloat(correctAnswer.toFixed(2));
+
+      taskEl.textContent = expr + " = ?";
+      answerEl.value = "";
+      resultEl.textContent = "";
+    }
+
+    document.getElementById("check").addEventListener("click", () => {
+      if (total >= 5) return;
+      let userAnswer = parseFloat(answerEl.value);
+      if (userAnswer === correctAnswer) {
+        resultEl.textContent = "✅ Правильно!";
+        correct++;
+      } else {
+        resultEl.textContent = `❌ Помилка, правильна відповідь: ${correctAnswer}`;
+      }
+      total++;
+      scoreEl.textContent = `Рахунок: ${correct} із ${total}`;
+    });
+
+    document.getElementById("next").addEventListener("click", () => {
+      newTask();
+    });
+
+    // стартуємо з першого завдання
+    newTask();
+  </script>
+</body>
+</html>
