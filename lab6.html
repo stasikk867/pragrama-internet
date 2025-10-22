@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<title>Лабораторна робота — Регулярні вирази</title>
+<style>
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f4f4f4;
+  color: #222;
+  margin: 0;
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.08);
+  padding: 40px 50px;
+  width: 600px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 26px;
+  color: #111;
+  border-bottom: 3px solid #000;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+h2 {
+  color: #000;
+  margin-top: 30px;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+details {
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin: 10px 0 20px;
+  text-align: left;
+}
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #111;
+}
+summary:hover {
+  color: #555;
+}
+
+.code-box {
+  background: #1e1e1e;
+  color: #f3f3f3;
+  border-radius: 8px;
+  padding: 10px;
+  font-family: Consolas, monospace;
+  font-size: 14px;
+  text-align: left;
+  overflow-x: auto;
+  border: 1px solid #333;
+}
+
+fieldset {
+  background: #fff;
+  padding: 25px 30px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  text-align: left;
+}
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+}
+input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+input:focus {
+  border-color: #000;
+  outline: none;
+}
+input.ok {
+  border-color: #28a745;
+}
+input.error {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+span.msg {
+  display: inline-block;
+  font-size: 13px;
+  margin-left: 5px;
+}
+span.ok {
+  color: #28a745;
+}
+span.err {
+  color: #dc3545;
+}
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  background: #000;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+button:hover {
+  background: #333;
+  transform: scale(1.03);
+}
+hr {
+  margin: 15px 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+#task1 {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 10px;
+  border: 1px dashed #ccc;
+  text-align: left;
+  font-family: Consolas, monospace;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Лабораторна робота — Регулярні вирази</h1>
+
+  <h2>Завдання 1. Розбір e-mail</h2>
+  <details open>
+    <summary>📘 Пояснення до завдання</summary>
+    <p>У цьому завданні ми розбираємо e-mail адресу за допомогою регулярного виразу. Кожна частина адреси (до і після @) виводиться окремо.</p>
+  </details>
+
+  <details>
+    <summary>💻 Код прикладу</summary>
+    <div class="code-box">
+<pre>
+let s="dwbyu@mail.ua";
+let r=/^([a-z0-9]+)(\.[a-z0-9]+)*@([a-z0-9]+)(\.[a-z0-9]+)*$/i;
+let a=s.match(r);
+for (i=0;i&lt;a.length;i++){
+  document.writeln("&lt;hr&gt; a["+i+"] "+a[i]);
+}
+</pre>
+    </div>
+  </details>
+
+  <p><b>Результат виконання:</b></p>
+  <div id="task1"></div>
+
+  <hr>
+
+  <h2>Завдання 2. Валідація форми</h2>
+  <details>
+    <summary>📘 Пояснення до завдання</summary>
+    <p>Створено форму з полями: e-mail, ім’я та прізвище, логін, пароль і поштовий індекс.  
+    Перевірка виконується по кліку кнопки через JavaScript та регулярні вирази.  
+    Якщо введено вірно — рамка зелена, якщо ні — червона, праворуч відображається підказка або галочка.</p>
+  </details>
+
+  <form id="myForm">
+    <fieldset>
+      <label>E-mail:</label>
+      <input type="text" id="email" placeholder="mariadutchakthebest.pnu.edu.ua">
+      <span class="msg" id="emailMsg"></span>
+
+      <label>Ім’я та прізвище:</label>
+      <input type="text" id="fullname" placeholder="Марія Дутчак">
+      <span class="msg" id="fullnameMsg"></span>
+
+      <label>Логін:</label>
+      <input type="text" id="login" placeholder="maria">
+      <span class="msg" id="loginMsg"></span>
+
+      <label>Пароль:</label>
+      <input type="password" id="password" placeholder="мін. 8 символів, буква, цифра, спецсимвол">
+      <span class="msg" id="passwordMsg"></span>
+
+      <label>Поштовий індекс:</label>
+      <input type="text" id="index" placeholder="12345">
+      <span class="msg" id="indexMsg"></span>
+
+      <button type="button" id="checkBtn">Перевірити</button>
+    </fieldset>
+  </form>
+</div>
+
+<script>
+
+let s = "dwbyu@mail.ua";
+let r = /^([a-z0-9]+)(\.[a-z0-9]+)*@([a-z0-9]+)(\.[a-z0-9]+)*$/i;
+let a = s.match(r);
+let out = "";
+for (let i = 0; i < a.length; i++) {
+  out += "<hr>a[" + i + "] = " + a[i];
+}
+document.getElementById("task1").innerHTML = out;
+
+
+document.getElementById("checkBtn").onclick = function() {
+  let email = document.getElementById("email");
+  let fullname = document.getElementById("fullname");
+  let login = document.getElementById("login");
+  let password = document.getElementById("password");
+  let index = document.getElementById("index");
+
+  let msgEmail = document.getElementById("emailMsg");
+  let msgFull = document.getElementById("fullnameMsg");
+  let msgLogin = document.getElementById("loginMsg");
+  let msgPass = document.getElementById("passwordMsg");
+  let msgIndex = document.getElementById("indexMsg");
+
+  [email, fullname, login, password, index].forEach(el => el.classList.remove("ok","error"));
+  [msgEmail, msgFull, msgLogin, msgPass, msgIndex].forEach(m => m.innerHTML = "");
+
+  let reEmail = /^[^ ]+@pnu\.edu\.ua$/i;
+  let reName = /^[A-ZА-ЯІЇЄ][a-zа-яіїє]+ [A-ZА-ЯІЇЄ]+$/u;
+  let reLogin = /^[A-Za-z]+$/;
+  let rePass = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[_\-!@#$%^&*]).{8,}$/;
+  let reIndex = /^\d{5}$/;
+
+  function check(field, regex, msg, text) {
+    if (regex.test(field.value.trim())) {
+      field.classList.add("ok");
+      msg.innerHTML = "<span class='ok'>✔️</span>";
+    } else {
+      field.classList.add("error");
+      msg.innerHTML = "<span class='err'>" + text + "</span>";
+    }
+  }
+
+  check(email, reEmail, msgEmail, "E-mail має закінчуватись на @pnu.edu.ua");
+  check(fullname, reName, msgFull, "Ім’я з великої, прізвище великими літерами");
+  check(login, reLogin, msgLogin, "Тільки латинські літери");
+  check(password, rePass, msgPass, "Мін. 8 симв, 1 літера, 1 цифра, 1 спецсимвол");
+  check(index, reIndex, msgIndex, "Має бути 5 цифр");
+};
+</script>
+
+</body>
+</html>
