@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лабораторна робота – Рядки в JavaScript</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #333;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #222;
+  }
+  .task {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 15px;
+    margin: 15px 0;
+  }
+  input, textarea, button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  .result {
+    background: #eef;
+    padding: 8px;
+    border-radius: 6px;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<h1>Лабораторна робота 7: Робота з рядками у JavaScript</h1>
+
+<div id="tasks"></div>
+
+<script>
+function createTask(title, inputs, func) {
+  const div = document.createElement('div');
+  div.className = 'task';
+  const htmlInputs = inputs.map(i => `<label>${i.label}</label><input id="${i.id}" placeholder="${i.placeholder}">`).join('');
+  div.innerHTML = `<h3>${title}</h3>${htmlInputs}<button>Виконати</button><div class='result'></div>`;
+  div.querySelector('button').onclick = () => {
+    const values = inputs.map(i => document.getElementById(i.id).value);
+    const res = func(...values);
+    div.querySelector('.result').innerHTML = `<b>Результат:</b> ${res}`;
+  };
+  document.getElementById('tasks').appendChild(div);
+}
+
+
+createTask('Завдання 1. Довжина рядка', [
+  {id:'t1', label:'Введіть рядок:', placeholder:'текст...'}
+], str => str.length);
+
+createTask('Завдання 2. Верхній та нижній регістр', [
+  {id:'t2', label:'Введіть рядок:', placeholder:'текст...'}
+], str => `Верхній: ${str.toUpperCase()} <br> Нижній: ${str.toLowerCase()}`);
+
+
+createTask('Завдання 3. Індекс символу', [
+  {id:'t3a', label:'Рядок:', placeholder:'текст...'},
+  {id:'t3b', label:'Символ:', placeholder:'a'}
+], (str, ch) => str.indexOf(ch));
+
+
+createTask('Завдання 4. Кількість входжень символу', [
+  {id:'t4a', label:'Рядок:', placeholder:'hello world'},
+  {id:'t4b', label:'Символ:', placeholder:'o'}
+], (str, ch) => [...str].filter(c => c===ch).length);
+
+
+createTask('Завдання 5. Міняємо місцями сусідні символи', [
+  {id:'t5', label:'Рядок:', placeholder:'abcdef'}
+], str => str.replace(/(.)(.)/g, '$2$1'));
+
+
+createTask('Завдання 6. Перевірка на спам', [
+  {id:'t6', label:'Рядок:', placeholder:'текст...'}
+], str => {
+  const spam = ['100% безкоштовно','збільшення продажів','тільки сьогодні','не видаляйте'];
+  return spam.some(s => str.toLowerCase().includes(s)) ? 'Так, є спам' : 'Ні, спаму немає';
+});
+
+
+createTask('Завдання 7. Скорочення рядка', [
+  {id:'t7a', label:'Рядок:', placeholder:'Hello, world!'},
+  {id:'t7b', label:'Макс. довжина:', placeholder:'8'}
+], (str, len) => str.length > len ? str.slice(0, len-3) + '...' : str);
+
+
+createTask('Завдання 8. Слова у зворотному порядку', [
+  {id:'t8', label:'Рядок:', placeholder:'Hello world'}
+], str => str.split(' ').reverse().join(' '));
+
+createTask('Завдання 8. Видалення голосних', [
+  {id:'t8v', label:'Рядок:', placeholder:'Hello, World!'}
+], str => str.replace(/[aeiouаеєиіїоуюяAEIOUАЕЄИІЇОУЮЯ]/g, ''));
+
+
+createTask('Завдання 9. Замінити пробіли на _', [
+  {id:'t9', label:'Рядок:', placeholder:'Hello World'}
+], str => str.replace(/ /g, '_'));
+
+createTask('Завдання 10. Підрядки заданої довжини', [
+  {id:'t10a', label:'Рядок:', placeholder:'abcdef'},
+  {id:'t10b', label:'Довжина:', placeholder:'3'}
+], (str, n) => {
+  n = parseInt(n);
+  let res = [];
+  for (let i=0; i<=str.length-n; i++) res.push(str.slice(i,i+n));
+  return `[${res.join(', ')}]`;
+});
+</script>
+</body>
+</html>
