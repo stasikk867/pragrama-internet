@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота №8 — Робота з об’єктами та класами JS</title>
+<style>
+  /*  Головні стилі у “pick-me aesthetic” стилі  */
+  body {
+    font-family: "Poppins", "Segoe UI", sans-serif;
+    background: radial-gradient(circle at top left, #1b0028, #0b0014 70%);
+    margin: 0;
+    padding: 0;
+    color: #f7eaff;
+    min-height: 100vh;
+    background-attachment: fixed;
+    letter-spacing: 0.3px;
+  }
+
+  h1 {
+    text-align: center;
+    background: linear-gradient(90deg, #ff6bdc, #b26eff, #5edfff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.6em;
+    font-weight: 700;
+    margin: 40px 0 20px;
+    text-shadow: 0 0 15px rgba(255, 107, 220, 0.4);
+  }
+
+  /* Контейнер секції  */
+  section {
+    background: rgba(40, 0, 70, 0.45);
+    backdrop-filter: blur(14px);
+    border-radius: 16px;
+    padding: 30px;
+    margin: 30px auto;
+    box-shadow: 0 8px 40px rgba(255, 107, 220, 0.1), 0 0 20px rgba(80, 0, 150, 0.25);
+    max-width: 850px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
+  }
+
+  section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 50px rgba(255, 107, 220, 0.2), 0 0 35px rgba(100, 0, 200, 0.4);
+  }
+
+  h2 {
+    background: linear-gradient(90deg, #ff6bdc, #5edfff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    margin-top: 0;
+    font-size: 1.5em;
+  }
+
+  .subtitle {
+    font-weight: 600;
+    color: #a576ff;
+    margin-top: 15px;
+  }
+
+  /* Інпут і селект */
+  input, select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.07);
+    margin: 6px 0 12px;
+    font-size: 15px;
+    color: #f7eaff;
+    transition: 0.3s;
+  }
+
+  input::placeholder {
+    color: #a597b8;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #ff6bdc;
+    box-shadow: 0 0 10px rgba(255, 107, 220, 0.6);
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  /*  Кнопки */
+  button {
+    display: inline-block;
+    padding: 11px 24px;
+    margin: 8px 6px 14px 0;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ff6bdc, #a670ff, #5edfff);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.4px;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 18px rgba(255, 107, 220, 0.3);
+  }
+
+  button:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 6px 25px rgba(255, 107, 220, 0.45);
+    filter: brightness(1.1);
+  }
+
+  button:active {
+    transform: scale(0.96);
+  }
+
+  /*  Результат  */
+  .result {
+    background: rgba(255, 255, 255, 0.06);
+    border-left: 4px solid #ff6bdc;
+    padding: 14px 16px;
+    border-radius: 10px;
+    margin-top: 12px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #f3eaff;
+    box-shadow: inset 0 0 10px rgba(255, 107, 220, 0.1);
+  }
+
+  .highlight {
+    color: #ff8ae0;
+    font-weight: 600;
+  }
+
+  /* Анімація появи  */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  section, h1 {
+    animation: fadeIn 0.7s ease;
+  }
+
+  /* Текстовий виділення  */
+  ::selection {
+    background: #ff6bdc;
+    color: white;
+  }
+
+  /*  Мобільна адаптація  */
+  @media (max-width: 600px) {
+    section {
+      margin: 15px;
+      padding: 22px;
+    }
+    button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+</style>
+
+
+</head>
+<body>
+  <h1>Лабораторна робота №8 — Робота з об’єктами, Date та класами JS</h1>
+
+  <section>
+    <h2>Завдання 1. Робота з часом</h2>
+    <p><b>1.1.</b> Поточний час:</p>
+    <div id="currentTime" class="result"></div>
+
+    <p><b>1.2.</b> Додати кількість секунд:</p>
+    <input type="number" id="secondsInput" placeholder="Введіть кількість секунд">
+    <button onclick="changeTime()">Змінити час</button>
+    <div id="changedTime" class="result"></div>
+  </section>
+
+
+  <section>
+    <h2>Завдання 2. Робота з датами</h2>
+
+    <div class="subtitle">2.1. Поточна дата, день тижня і час</div>
+    <button onclick="showCurrentDate()">Виконати</button>
+    <div id="dateResult" class="result"></div>
+
+    <div class="subtitle">2.2. Знайти останній день місяця</div>
+    <input type="number" id="year" placeholder="Рік (наприклад, 2025)">
+    <input type="number" id="month" placeholder="Місяць (1–12)">
+    <button onclick="getLastDay()">Знайти</button>
+    <div id="lastDayResult" class="result"></div>
+
+    <div class="subtitle">2.3. Секунди від початку дня / до наступного</div>
+    <button onclick="getSecondsInfo()">Показати</button>
+    <div id="secondsInfo" class="result"></div>
+  </section>
+
+
+  <section>
+    <h2>Завдання 3. Клас Car</h2>
+    <button onclick="showCarInfo()">Показати приклад</button>
+    <div id="carInfo" class="result"></div>
+  </section>
+
+ 
+  <section>
+    <h2>Завдання 4. Клас ElectricCar</h2>
+    <button onclick="showElectricCar()">Показати приклад</button>
+    <div id="electricCarInfo" class="result"></div>
+  </section>
+
+  <section>
+    <h2>Завдання 5. Статичний метод</h2>
+    <button onclick="useMathHelper()">Показати приклад</button>
+    <div id="mathHelperResult" class="result"></div>
+  </section>
+
+
+  <section>
+    <h2>Завдання 6 (Варіант 2). Клас Student</h2>
+    <label>Ім’я студента:</label>
+    <input type="text" id="studentName">
+    <label>Група:</label>
+    <input type="text" id="studentGroup">
+    <label>Оцінки (через кому):</label>
+    <input type="text" id="studentGrades" placeholder="Наприклад: 90,85,100">
+    <button onclick="addStudent()">Додати студента</button>
+    <button onclick="showStudents()">Показати інформацію</button>
+    <button style="background:#dc3545" onclick="clearStudents()">Очистити</button>
+    <div id="studentsResult" class="result"></div>
+  </section>
+
+
+  <script>
+   
+    function showCurrentTime() {
+      const now = new Date();
+      document.getElementById("currentTime").innerText = now.toLocaleTimeString("uk-UA");
+    }
+    showCurrentTime();
+    setInterval(showCurrentTime, 1000);
+
+    function changeTime() {
+      const seconds = parseInt(document.getElementById("secondsInput").value);
+      if (isNaN(seconds)) return;
+      let date = new Date();
+      date.setSeconds(date.getSeconds() + seconds);
+      document.getElementById("changedTime").innerText =
+        "Новий час: " + date.toLocaleTimeString("uk-UA");
+    }
+
+  
+    function showCurrentDate() {
+      const now = new Date();
+      const days = ["неділя","понеділок","вівторок","середа","четвер","п’ятниця","субота"];
+      const months = ["січня","лютого","березня","квітня","травня","червня","липня","серпня","вересня","жовтня","листопада","грудня"];
+      document.getElementById("dateResult").innerHTML = `
+        <span class="highlight">Дата:</span> ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} року<br>
+        <span class="highlight">День тижня:</span> ${days[now.getDay()]}<br>
+        <span class="highlight">Час:</span> ${now.getHours()}:${now.getMinutes().toString().padStart(2, "0")}
+      `;
+    }
+
+    function getLastDay() {
+      const year = +document.getElementById("year").value;
+      const month = +document.getElementById("month").value;
+      if (!year || !month) return;
+      const lastDay = new Date(year, month, 0).getDate();
+      document.getElementById("lastDayResult").innerText = `Останній день місяця: ${lastDay}`;
+    }
+
+    function getSecondsInfo() {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      const passed = Math.floor((now - start) / 1000);
+      const toNext = Math.floor((end - now) / 1000);
+      document.getElementById("secondsInfo").innerHTML =
+        `Від початку дня: ${passed} сек.<br>До наступного дня: ${toNext} сек.`;
+    }
+
+  
+    class Car {
+      constructor(brand, model, year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+      }
+      info() {
+        return `Авто: ${this.brand} ${this.model}, ${this.year} року.`;
+      }
+    }
+
+    function showCarInfo() {
+      const car = new Car("Toyota", "Camry", 2020);
+      document.getElementById("carInfo").innerText = car.info();
+    }
+
+
+    class ElectricCar extends Car {
+      constructor(brand, model, year, battery) {
+        super(brand, model, year);
+        this.battery = battery;
+      }
+      charge() {
+        return `${this.brand} ${this.model} заряджається... Батарея: ${this.battery} kWh.`;
+      }
+    }
+
+    function showElectricCar() {
+      const tesla = new ElectricCar("Tesla", "Model 3", 2022, 75);
+      document.getElementById("electricCarInfo").innerHTML = tesla.info() + "<br>" + tesla.charge();
+    }
+
+    class MathHelper {
+      static add(a, b) {
+        return a + b;
+      }
+    }
+
+    function useMathHelper() {
+      const sum = MathHelper.add(5, 7);
+      document.getElementById("mathHelperResult").innerText = `Результат MathHelper.add(5, 7) = ${sum}`;
+    }
+
+
+    class Student {
+      constructor(name, group, grades) {
+        this.name = name;
+        this.group = group;
+        this.grades = grades;
+      }
+      getAverageGrade() {
+        const sum = this.grades.reduce((a, b) => a + b, 0);
+        return (sum / this.grades.length).toFixed(2);
+      }
+      static compareByGrade(s1, s2) {
+        return s2.getAverageGrade() - s1.getAverageGrade();
+      }
+    }
+
+    const students = [];
+
+    function addStudent() {
+      const name = document.getElementById("studentName").value.trim();
+      const group = document.getElementById("studentGroup").value.trim();
+      const grades = document.getElementById("studentGrades").value.split(",").map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+
+      if (!name || !group || grades.length === 0) {
+        alert("Заповніть усі поля правильно!");
+        return;
+      }
+
+      students.push(new Student(name, group, grades));
+      alert("Студента додано!");
+      clearInputs();
+    }
+
+    function showStudents() {
+      if (students.length === 0) {
+        document.getElementById("studentsResult").innerText = "Немає студентів.";
+        return;
+      }
+      const sorted = [...students].sort(Student.compareByGrade);
+      let html = "";
+      sorted.forEach(s => {
+        html += `👨‍🎓 <b>${s.name}</b> (${s.group}) — середній бал: <span class="highlight">${s.getAverageGrade()}</span><br>`;
+      });
+      document.getElementById("studentsResult").innerHTML = html;
+    }
+
+    function clearInputs() {
+      document.getElementById("studentName").value = "";
+      document.getElementById("studentGroup").value = "";
+      document.getElementById("studentGrades").value = "";
+    }
+
+    function clearStudents() {
+      students.length = 0;
+      clearInputs();
+      document.getElementById("studentsResult").innerHTML = "";
+    }
+  </script>
+</body>
+</html>
