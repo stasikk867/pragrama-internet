@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>jQuery Демонстрація</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<style>
+    body {
+        background: #f4f4f4;
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    h2 {
+        margin-top: 40px;
+        color: #333;
+    }
+
+    .block {
+        background: white;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    button {
+        padding: 10px 20px;
+        margin: 5px;
+        background: #4A90E2;
+        border: none;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        background: #357ABD;
+    }
+
+    .demo-box {
+        padding: 10px;
+        background: #e8eff7;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    ul li {
+        margin: 5px 0;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>jQuery Демонстрація</h1>
+
+
+<h2>Завдання 1 – .html(), .css(), .val(), .attr(), .removeAttr()</h2>
+
+<div class="block">
+    <div id="html-box" class="demo-box">Початковий HTML текст</div>
+    <input id="input1" type="text" value="Привіт!">
+
+    <button onclick="demoHtml()">.html()</button>
+    <button onclick="demoCss()">.css()</button>
+    <button onclick="demoVal()">.val()</button>
+    <button onclick="demoAttrGet()">attr(‘title’)</button>
+    <button onclick="demoAttrSet()">attr(‘title’, ‘новий заголовок’)</button>
+    <button onclick="demoAttrMulti()">attr({id:'newID', class:'demo-box'})</button>
+    <button onclick="demoAttrFunc()">attr(‘data-num’, f())</button>
+    <button onclick="demoRemoveAttr()">removeAttr()</button>
+</div>
+
+<h2>Завдання 2 – .appendTo(), .replaceWith(), .width(fn), .outerWidth()</h2>
+
+<div class="block">
+    <div id="boxA" class="demo-box">Блок A</div>
+    <div id="boxB" class="demo-box">Блок B</div>
+
+    <button onclick="demoAppendTo()">appendTo()</button>
+    <button onclick="demoReplace()">replaceWith()</button>
+    <button onclick="demoWidthFunc()">width(function)</button>
+    <button onclick="alert($('#boxA').outerWidth())">outerWidth()</button>
+</div>
+
+
+<h2>Завдання 3 – addBack(), has(), children(), last(), parents()</h2>
+
+<div class="block" id="task3">
+    <div class="demo-box parent">
+        Parent
+        <div class="child">Child 1</div>
+        <div class="child">Child 2</div>
+    </div>
+
+    <button onclick="demoAddBack()">addBack()</button>
+    <button onclick="demoHas()">has()</button>
+    <button onclick="demoChildren()">children()</button>
+    <button onclick="demoLast()">last()</button>
+    <button onclick="demoParents()">parents()</button>
+</div>
+
+
+<h2>Завдання 4 – .filter() зі стилями</h2>
+
+<div class="block">
+    <div class="demo modify-item">Елемент 1</div>
+    <div class="demo modify-item">Елемент 2</div>
+    <div class="demo modify-item">Елемент 3</div>
+    <div class="demo modify-item">Елемент 4</div>
+
+    <ul id="list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+
+    <button onclick="filterClass()">filter() – клас</button>
+    <button onclick="filterLi()">filter() – кожен третій li</button>
+</div>
+
+
+<h2>Завдання 5 – $.data() та інші методи</h2>
+
+<div class="block" id="task5">
+    <div id="dataBox" class="demo-box">Коробка</div>
+
+    <button onclick="demoData()">$.data()</button>
+</div>
+
+
+<script>
+
+function demoHtml() {
+    $("#html-box").html("<b>Новий <i>HTML</i> текст</b>");
+}
+
+function demoCss() {
+    $("#html-box").css({
+        color: "red",
+        fontSize: "20px"
+    });
+}
+
+function demoVal() {
+    alert($("#input1").val());
+}
+
+function demoAttrGet() {
+    alert($("#html-box").attr("title"));
+}
+
+function demoAttrSet() {
+    $("#html-box").attr("title", "Новий заголовок!");
+}
+
+function demoAttrMulti() {
+    $("#html-box").attr({ id: "newID", class: "demo-box" });
+}
+
+function demoAttrFunc() {
+    $("#html-box").attr("data-num", function (i, old) {
+        return (old || 0) * 1 + 1;
+    });
+}
+
+function demoRemoveAttr() {
+    $("#html-box").removeAttr("style");
+}
+
+
+function demoAppendTo() {
+    $("#boxA").appendTo("#boxB");
+}
+
+function demoReplace() {
+    $("#boxB").replaceWith("<div class='demo-box'>Замінено!</div>");
+}
+
+function demoWidthFunc() {
+    $("#boxA").width(function(i, w){
+        return w + 20;
+    });
+}
+
+
+
+function demoAddBack() {
+    $(".child:first").addBack().css("background", "#d6ffd6");
+}
+
+function demoHas() {
+    $(".parent").has(".child").css("border", "2px solid green");
+}
+
+function demoChildren() {
+    $(".parent").children().css("background", "#fff3cd");
+}
+
+function demoLast() {
+    $(".child").last().css("background", "#ffdddd");
+}
+
+function demoParents() {
+    $(".child:first").parents().css("border", "2px dashed blue");
+}
+
+
+
+function filterClass() {
+    $(".modify-item")
+        .filter(":odd")
+        .css({ background: "#c2e9ff" })
+        .append(" – modify");
+}
+
+function filterLi() {
+    $("#list li")
+        .filter(function(i){ return (i+1)%3===0; })
+        .css({ background: "#ffe0e0" })
+        .append(" – modify");
+}
+
+function demoData() {
+    $.data(document.getElementById("dataBox"), "info", { clicks: 1 });
+    let obj = $.data(document.getElementById("dataBox"), "info");
+
+    alert("Збережено в data: clicks=" + obj.clicks);
+}
+</script>
+
+</body>
+</html>
