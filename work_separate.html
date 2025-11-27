@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Супер сучасний логотип 121 ІПЗ</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-align: center;
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.6);
+        }
+
+        #logo {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+            font-size: 28px;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(255,0,100,0.5), 0 5px 20px rgba(0,0,0,0.5);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+        }
+
+     
+        #logo:hover {
+            transform: scale(1.15) rotate(-5deg);
+            box-shadow: 0 20px 60px rgba(255,0,100,0.8), 0 15px 50px rgba(0,0,0,0.7);
+        }
+
+      
+        @keyframes pulseRotate {
+            0%, 100% { transform: scale(1) rotate(0deg); box-shadow: 0 10px 30px rgba(255,0,100,0.5), 0 5px 20px rgba(0,0,0,0.5);}
+            50% { transform: scale(1.2) rotate(5deg); box-shadow: 0 20px 60px rgba(255,0,100,0.7), 0 10px 40px rgba(0,0,0,0.6);}
+        }
+
+       
+        @keyframes gradientShift {
+            0% { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
+            25% { background: linear-gradient(135deg, #ff6b6b, #ffcc33); }
+            50% { background: linear-gradient(135deg, #1E90FF, #FF6B6B); }
+            75% { background: linear-gradient(135deg, #34e89e, #0f3443); }
+            100% { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
+        }
+
+        #logo.animate {
+            animation: pulseRotate 2s infinite ease-in-out, gradientShift 6s infinite ease-in-out;
+        }
+
+        #animateLogo {
+            margin-top: 40px;
+            padding: 15px 35px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            background: #ff4b2b;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+        }
+
+        #animateLogo:hover {
+            transform: scale(1.05);
+            background: #ff416c;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        }
+
+        #animateLogo:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 600px) {
+            #logo { width: 140px; height: 140px; font-size: 22px; }
+            #animateLogo { font-size: 18px; padding: 12px 25px; }
+            h1 { font-size: 2rem; margin-bottom: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Логотип спеціальності 121 ІПЗ</h1>
+<div id="logo">121 ІПЗ</div>
+<button id="animateLogo">Увімкнути/Вимкнути анімацію</button>
+
+<script>
+$(document).ready(function(){
+    $("#animateLogo").click(function(){
+        $("#logo").toggleClass("animate");
+    });
+});
+</script>
+
+</body>
+</html>

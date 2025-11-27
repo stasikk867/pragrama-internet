@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Завдання 1</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #74ABE2, #5563DE);
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+        }
+
+   
+        .container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+     
+        .box {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 18px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+        }
+
+        #box1 { background-color: teal; }
+        #box2 { background-color: darkorange; }
+        #box3 { background-color: purple; }
+
+     
+        #start {
+            margin-top: 40px;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background: #5563DE;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        #start:hover {
+            background: #3742A1;
+            transform: scale(1.05);
+        }
+
+        #start:active {
+            transform: scale(0.95);
+        }
+
+       
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Демонстрація методів jQuery</h1>
+
+<div class="container">
+    <div id="box1" class="box">.hide()</div>
+    <div id="box2" class="box">.slideUp()</div>
+    <div id="box3" class="box">.dequeue()</div>
+</div>
+
+<button id="start">Запустити анімації</button>
+
+<script>
+$(document).ready(function(){
+    $("#start").click(function(){
+        // .hide()
+        $("#box1").hide(1000);
+
+        // .slideUp()
+        $("#box2").slideUp(1500);
+
+        // .dequeue()
+        $("#box3").animate({width: '300px'}, 1000)
+                  .animate({height: '50px'}, 1000)
+                  .queue(function(next){
+                      $(this).css("background-color", "green");
+                      next();
+                  })
+                  .dequeue();
+    });
+});
+</script>
+
+</body>
+</html>
